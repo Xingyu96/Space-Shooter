@@ -3,11 +3,21 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public float speed = 15f;
+    public float padding = 0.5f;
 
     private Vector3 position;
-    private float xmin = -5f;
-    private float xmax = 5f;
+    private float xmin;
+    private float xmax;
 
+    void Start()
+    {
+        //determine leftmost and rightmost coordinates
+        float distanceZ = transform.position.z - Camera.main.transform.position.z;
+        Vector3 leftmost = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distanceZ));
+        Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distanceZ));
+        xmin = leftmost.x + padding;
+        xmax = rightmost.x - padding;
+    }
 	
 	// Update is called once per frame
 	void Update () {
