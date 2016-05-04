@@ -3,7 +3,10 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public float speed = 15f;
+    public float laserspeed = 10f;
     public float padding = 0.5f;
+    public GameObject laserPrefab;
+    public float fireRate = 0.2f;
 
     private float xmin;
     private float xmax;
@@ -29,8 +32,23 @@ public class PlayerController : MonoBehaviour {
             this.transform.position += Vector3.right * speed * Time.deltaTime;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            InvokeRepeating("Fire", 0.000001f, fireRate);
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            CancelInvoke();
+        }
+
         //restrict player to gamescpace
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, xmin, xmax), transform.position.y, transform.position.z);
 
 	}
+
+    void Fire()
+    {
+        GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
+        laser.GetComponent<Rigidbody2D>().velocity = new Vector3(0, laserspeed, 0);
+    }
 }
