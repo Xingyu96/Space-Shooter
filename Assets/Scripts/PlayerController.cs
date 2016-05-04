@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour {
     public float speed = 15f;
     public float padding = 0.5f;
 
-    private Vector3 position;
     private float xmin;
     private float xmax;
 
