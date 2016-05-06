@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
+    public float health = 150f;
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -9,7 +10,14 @@ public class EnemyBehaviour : MonoBehaviour {
         Projectile laser = col.gameObject.GetComponent<Projectile>();
         if (laser)
         {
-            Debug.Log("hit by a laser");
+            //get damage done by laser; destroy incoming laser object
+            health -= laser.GetDamage();
+            laser.Hit();
+            //destroy enemy ship if health less thab 0
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
