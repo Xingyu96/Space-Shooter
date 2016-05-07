@@ -13,7 +13,7 @@ public class EnemyBehaviour : MonoBehaviour {
             //get damage done by laser; destroy incoming laser object
             health -= laser.GetDamage();
             laser.Hit();
-            //destroy enemy ship if health less than 0
+            //destroy enemy ship if health less than lollllllll
             if (health <= 0)
             {
                 Destroy(gameObject);
