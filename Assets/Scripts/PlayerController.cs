@@ -50,7 +50,8 @@ public class PlayerController : MonoBehaviour {
 
     void Fire()
     {
-        GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
+        Vector3 offset = new Vector3(0, 1f, 0);
+        GameObject laser = Instantiate(laserPrefab, transform.position + offset, Quaternion.identity) as GameObject;
         laser.GetComponent<Rigidbody2D>().velocity = new Vector3(0, laserspeed, 0);
     }
 

@@ -6,6 +6,7 @@ public class EnemyBehaviour : MonoBehaviour {
     public float laserspeed = 10f;
     public GameObject laserPrefab;
     public float fireRate = 0.2f;
+    public float shotsPerSeconds = 0.5f;
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -26,18 +27,20 @@ public class EnemyBehaviour : MonoBehaviour {
 
     void Update()
     {
-        //fire laser
-        //InvokeRepeating("Fire", 0.000001f, fireRate);
-        Vector3 startPosition = transform.position + new Vector3(0, -1, 0);
-        GameObject laser = Instantiate(laserPrefab, startPosition, Quaternion.identity) as GameObject;
-        laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -laserspeed);
-      
+        float probability = Time.deltaTime * shotsPerSeconds;
+        if (Random.value < probability)
+        {
+            Fire();
+        }
 
+
+ 
     }
 
     void Fire()
     {
-        //GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
-        //laser.GetComponent<Rigidbody2D>().velocity = new Vector3(0, laserspeed, 0);
+        Vector3 startPosition = transform.position + new Vector3(0, -1, 0);
+        GameObject laser = Instantiate(laserPrefab, startPosition, Quaternion.identity) as GameObject;
+        laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -laserspeed);
     }
 }
