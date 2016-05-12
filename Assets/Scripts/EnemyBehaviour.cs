@@ -27,6 +27,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     void Update()
     {
+        //to deal with frame rates
         float probability = Time.deltaTime * shotsPerSeconds;
         if (Random.value < probability)
         {
@@ -39,8 +40,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     void Fire()
     {
-        Vector3 startPosition = transform.position + new Vector3(0, -1, 0);
-        GameObject laser = Instantiate(laserPrefab, startPosition, Quaternion.identity) as GameObject;
+        GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
         laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -laserspeed);
     }
 }
