@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
     private float xmin;
     private float xmax;
 
+    private float health = 250f;
+
     void Start()
     {
         //determine leftmost and rightmost coordinates
@@ -50,5 +52,23 @@ public class PlayerController : MonoBehaviour {
     {
         GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
         laser.GetComponent<Rigidbody2D>().velocity = new Vector3(0, laserspeed, 0);
+    }
+
+    //take damage and die if hit by enemy laser too many times
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Projectile laser = col.gameObject.GetComponent<Projectile>();
+        Debug.Log("hit");
+        if (laser)
+        {
+            //get damage done by laser; destroy incoming laser object
+            health -= laser.GetDamage();
+            laser.Hit();
+            //destroy enemy ship if health less than lollllllll
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }
