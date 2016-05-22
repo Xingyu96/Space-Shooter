@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour {
     public float width = 10f;
     public float height = 5f;
     public float speed = 15f;
+    public float spawnDelay = 0.5f;
 
     private float xmax;
     private float xmin;
@@ -19,7 +20,7 @@ public class EnemySpawner : MonoBehaviour {
         //    GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
         //    enemy.transform.parent = child;
         //}
-        SpawnFormation();
+        SpawnUntilFull();
 
         //get boundaries of viewport
         float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
@@ -60,7 +61,7 @@ public class EnemySpawner : MonoBehaviour {
         //respawn
         if (AllMembersDead())
         {
-            SpawnFormation();
+            SpawnUntilFull();
         }
 	}
 
@@ -82,5 +83,33 @@ public class EnemySpawner : MonoBehaviour {
             GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
             enemy.transform.parent = child;
         }
+    }
+
+    //spawn one by one
+    void SpawnUntilFull()
+    {
+        Transform freePostion = NextFreePosition();
+        if (freePostion)
+        {
+            GameObject enemy = Instantiate(enemyPrefab, freePostion.position, Quaternion.identity) as GameObject;
+            enemy.transform.parent = freePostion;
+        }
+        if(NextFreePosition()){
+            Invoke("SpawnUntilFull", spawnDelay);
+        }
+    }
+
+    //returns the next free position
+    Transform NextFreePosition()
+    {
+        foreach (Transform childPositionGameObject in transform)
+        {
+            if (childPositionGameObject.childCount == 0)
+            {
+                return childPositionGameObject;
+            }
+        }
+        return null;
+
     }
 }
