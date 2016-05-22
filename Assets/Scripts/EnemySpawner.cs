@@ -14,11 +14,12 @@ public class EnemySpawner : MonoBehaviour {
 	void Start () {
 
         //for each position object in formation, spawn an enemy on top
-        foreach (Transform child in transform)
-        {
-            GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
-            enemy.transform.parent = child;
-        }
+        //foreach (Transform child in transform)
+        //{
+        //    GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
+        //    enemy.transform.parent = child;
+        //}
+        SpawnFormation();
 
         //get boundaries of viewport
         float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
@@ -44,6 +45,7 @@ public class EnemySpawner : MonoBehaviour {
             transform.position += Vector3.left * speed * Time.deltaTime;
         }
 
+        //check if formation is going out of the playspace
         float formation_right = transform.position.x + (0.5f * width);
         float formation_left = transform.position.x - (0.5f * width);
         if (formation_right > xmax)
@@ -54,5 +56,31 @@ public class EnemySpawner : MonoBehaviour {
         {
             movingRight = true;
         }
+
+        //respawn
+        if (AllMembersDead())
+        {
+            SpawnFormation();
+        }
 	}
+
+    bool AllMembersDead()
+    {
+        foreach(Transform childPositionGameObject in transform){
+            if (childPositionGameObject.childCount > 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void SpawnFormation()
+    {
+        foreach (Transform child in transform)
+        {
+            GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
+            enemy.transform.parent = child;
+        }
+    }
 }
