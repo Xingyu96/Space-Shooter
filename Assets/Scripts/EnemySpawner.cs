@@ -59,10 +59,10 @@ public class EnemySpawner : MonoBehaviour {
         }
 
         //respawn
-        if (AllMembersDead())
-        {
+        //if (AllMembersDead())
+        //{
             SpawnUntilFull();
-        }
+        //}
 	}
 
     bool AllMembersDead()
@@ -76,14 +76,14 @@ public class EnemySpawner : MonoBehaviour {
         return true;
     }
 
-    void SpawnFormation()
-    {
-        foreach (Transform child in transform)
-        {
-            GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
-            enemy.transform.parent = child;
-        }
-    }
+    //void SpawnFormation()
+    //{
+    //    foreach (Transform child in transform)
+    //    {
+    //        GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
+    //        enemy.transform.parent = child;
+    //    }
+    //}
 
     //spawn one by one
     void SpawnUntilFull()
