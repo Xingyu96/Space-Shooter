@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
 
     private float health = 250f;
 
+    private LevelManager lvlManager;
+
     void Start()
     {
         //determine leftmost and rightmost coordinates
@@ -21,6 +23,9 @@ public class PlayerController : MonoBehaviour {
         Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distanceZ));
         xmin = leftmost.x + padding;
         xmax = rightmost.x - padding;
+
+        //instantiate lvlManager
+        lvlManager = GameObject.FindObjectOfType<LevelManager>();
     }
 	
 	// Update is called once per frame
@@ -65,10 +70,12 @@ public class PlayerController : MonoBehaviour {
             //get damage done by laser; destroy incoming laser object
             health -= laser.GetDamage();
             laser.Hit();
-            //destroy enemy ship if health less than lollllllll
+            //destroy player if health less than 0
+            //currently set to trigger lose screen
             if (health <= 0)
             {
                 Destroy(gameObject);
+                lvlManager.PlayerDead();
             }
         }
     }

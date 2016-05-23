@@ -7,6 +7,7 @@ public class EnemyBehaviour : MonoBehaviour {
     public GameObject laserPrefab;
     public float fireRate = 0.2f;
     public float shotsPerSeconds = 0.5f;
+    
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -21,6 +22,9 @@ public class EnemyBehaviour : MonoBehaviour {
             if (health <= 0)
             {
                 Destroy(gameObject);
+                //lvlScore.Score(250);
+                GameObject.FindObjectOfType<ScoreKeeper>().Score(250);
+
             }
         }
     }

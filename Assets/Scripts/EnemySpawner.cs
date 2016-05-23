@@ -28,6 +28,8 @@ public class EnemySpawner : MonoBehaviour {
         Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distanceToCamera));
         xmin = leftmost.x;
         xmax = rightmost.x;
+        Debug.Log("left: " + xmin);
+        Debug.Log("right: " + xmax);
 	}
 
     public void OnDrawGizmos()

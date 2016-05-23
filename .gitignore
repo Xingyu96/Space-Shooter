@@ -5,6 +5,7 @@ Temp/**
 Library/**
 *.pdb
 Builds/**/*
+*.htm
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
