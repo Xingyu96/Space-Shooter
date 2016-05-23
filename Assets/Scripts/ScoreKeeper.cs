@@ -6,11 +6,11 @@ public class ScoreKeeper : MonoBehaviour {
 
     public int score = 0;
 
-    Text scoreText;
+    private Text scoreText;
 
     void Start()
     {
-        scoreText = GameObject.FindObjectOfType<Text>();
+        scoreText = GetComponent<Text>();
 
     }
     public void Score(int point)

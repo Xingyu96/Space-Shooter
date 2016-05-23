@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour {
 
     private float health = 250f;
 
-    private LevelManager lvlManager;
+    //private LevelManager lvlManager;
+    private TextManager textManager;
 
     void Start()
     {
@@ -25,7 +26,8 @@ public class PlayerController : MonoBehaviour {
         xmax = rightmost.x - padding;
 
         //instantiate lvlManager
-        lvlManager = GameObject.FindObjectOfType<LevelManager>();
+        //lvlManager = GameObject.FindObjectOfType<LevelManager>();
+        textManager = GameObject.FindObjectOfType<TextManager>();
     }
 	
 	// Update is called once per frame
@@ -75,7 +77,8 @@ public class PlayerController : MonoBehaviour {
             if (health <= 0)
             {
                 Destroy(gameObject);
-                lvlManager.PlayerDead();
+                //lvlManager.PlayerDead();
+                textManager.DiplayLose();
             }
         }
     }
