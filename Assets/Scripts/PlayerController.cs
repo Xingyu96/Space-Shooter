@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip firesound;
     public AudioClip death;
 
-    private float xmin;
-    private float xmax;
+    private float xmin, xmax, ymin, ymax;
 
     private float health = 250f;
 
@@ -26,6 +25,11 @@ public class PlayerController : MonoBehaviour {
         Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distanceZ));
         xmin = leftmost.x + padding;
         xmax = rightmost.x - padding;
+        //determine up and down max/min
+        Vector3 upmost = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, distanceZ));
+        Vector3 downmost = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distanceZ));
+        ymin = downmost.y + padding;
+        ymax = upmost.y - padding;
 
         //instantiate lvlManager
         //lvlManager = GameObject.FindObjectOfType<LevelManager>();
@@ -42,6 +46,14 @@ public class PlayerController : MonoBehaviour {
         {
             this.transform.position += Vector3.right * speed * Time.deltaTime;
         }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            this.transform.position += Vector3.up * speed * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            this.transform.position += Vector3.down * speed * Time.deltaTime;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -53,7 +65,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         //restrict player to gamescpace
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, xmin, xmax), transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, xmin, xmax), Mathf.Clamp(transform.position.y, ymin, ymax), transform.position.z);
 
 	}
 
