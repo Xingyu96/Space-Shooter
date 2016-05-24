@@ -14,7 +14,7 @@ public class TextManager : MonoBehaviour {
         restart.enabled = false;
 	}
 
-    public void DiplayLose()
+    public void DisplayLose()
     {
         transform.Find("LostMessage").GetComponent<Text>().enabled = true;
         transform.Find("PlayAgain").GetComponent<Text>().enabled = true;

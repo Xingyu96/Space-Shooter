@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
     public float padding = 0.5f;
     public GameObject laserPrefab;
     public float fireRate = 0.2f;
+    public AudioClip firesound;
+    public AudioClip death;
 
     private float xmin;
     private float xmax;
@@ -60,13 +62,13 @@ public class PlayerController : MonoBehaviour {
         Vector3 offset = new Vector3(0, 1f, 0);
         GameObject laser = Instantiate(laserPrefab, transform.position , Quaternion.identity) as GameObject;
         laser.GetComponent<Rigidbody2D>().velocity = new Vector3(0, laserspeed, 0);
+        AudioSource.PlayClipAtPoint(firesound, transform.position);
     }
 
     //take damage and die if hit by enemy laser too many times
     void OnTriggerEnter2D(Collider2D col)
     {
         Projectile laser = col.gameObject.GetComponent<Projectile>();
-        Debug.Log("hit");
         if (laser)
         {
             //get damage done by laser; destroy incoming laser object
@@ -76,10 +78,15 @@ public class PlayerController : MonoBehaviour {
             //currently set to trigger lose screen
             if (health <= 0)
             {
-                Destroy(gameObject);
-                //lvlManager.PlayerDead();
-                textManager.DiplayLose();
+                Die();
             }
         }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+        textManager.DisplayLose();
+        AudioSource.PlayClipAtPoint(death, transform.position);
     }
 }

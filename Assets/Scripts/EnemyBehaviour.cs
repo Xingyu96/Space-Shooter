@@ -8,6 +8,9 @@ public class EnemyBehaviour : MonoBehaviour {
     public float fireRate = 0.2f;
     public float shotsPerSeconds = 0.5f;
     public int value = 150;
+    public AudioClip fire;
+    public AudioClip explode;
+
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -17,13 +20,16 @@ public class EnemyBehaviour : MonoBehaviour {
         {
             //get damage done by laser; destroy incoming laser object
             health -= laser.GetDamage();
-            laser.Hit();
             //destroy enemy ship if health less than lollllllll
             if (health <= 0)
             {
+                AudioSource.PlayClipAtPoint(explode, transform.position);
+                Debug.Log("playe!");
                 Destroy(gameObject);
                 //lvlScore.Score(250);
                 GameObject.FindObjectOfType<ScoreKeeper>().Score(value);
+                //playsound
+                
 
             }
         }
@@ -46,5 +52,6 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
         laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -laserspeed);
+        AudioSource.PlayClipAtPoint(fire, transform.position);
     }
 }
